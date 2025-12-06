@@ -1,35 +1,39 @@
-# 🚀 PREX Demo – Examen Técnico
+<div align="center">
+  <img src="assets/image-eb96af1d-aae5-497e-bbfb-50d12e16c2d7.png" alt="PREX Logo" width="600">
+</div>
+
+# PREX Demo – Examen Técnico
 
 Este repositorio contiene mi solución al examen de PREX. La solución incluye:
 
-- ✅ Infraestructura en AWS creada con Terraform (VPC, EKS y dependencias)
-- ✅ Aplicación Backend (FastAPI) y Frontend (HTML)
-- ✅ Despliegue en Kubernetes con Deployments, Services, HPA e Ingress
+- Infraestructura en AWS creada con Terraform (VPC, EKS y dependencias)
+- Aplicación Backend (FastAPI) y Frontend (HTML)
+- Despliegue en Kubernetes con Deployments, Services, HPA e Ingress
 
 ---
 
-## 📋 Requisitos
+## Requisitos
 
 Antes de comenzar, asegúrate de tener:
 
-1. ✅ Una cuenta de AWS con permisos `AdministratorAccess`
-2. ✅ Un IDE como Visual Studio Code, Cursor u otro similar
-3. ✅ Terraform instalado (versión recomendada >= 1.5)
-4. ✅ AWS CLI configurado con un usuario válido
+1. Una cuenta de AWS con permisos `AdministratorAccess`
+2. Un IDE como Visual Studio Code, Cursor u otro similar
+3. Terraform instalado (versión recomendada >= 1.5)
+4. AWS CLI configurado con un usuario válido
 
 ---
 
-## 🏗️ Infraestructura (Terraform)
+## Infraestructura (Terraform)
 
 Toda la infraestructura se encuentra dentro de la carpeta `iac/`.
 
 ### Componentes incluidos:
 
-- 🌐 VPC con subnets públicas y privadas
-- 🔄 NAT Gateway para salida a internet
-- ☸️ Cluster EKS en subnets privadas
-- 🔐 Roles de IAM, IRSA y Load Balancer Controller
-- 👤 Configuración de acceso al cluster mediante aws-auth
+- VPC con subnets públicas y privadas
+- NAT Gateway para salida a internet
+- Cluster EKS en subnets privadas
+- Roles de IAM, IRSA y Load Balancer Controller
+- Configuración de acceso al cluster mediante aws-auth
 
 ### 1. Configurar usuarios de acceso (aws_auth_users)
 
@@ -54,7 +58,7 @@ terraform plan
 terraform apply
 ```
 
-> ⚠️ **Nota:** Esto creará toda la infraestructura en AWS. El proceso puede tardar varios minutos.
+> **Nota:** Esto creará toda la infraestructura en AWS. El proceso puede tardar varios minutos.
 
 ### 3. Conectarse al cluster
 
@@ -68,18 +72,18 @@ aws eks update-kubeconfig --name <cluster-name>
 
 ---
 
-## ☸️ Kubernetes (Deploy de Apps)
+## Kubernetes (Deploy de Apps)
 
 Aquí se despliega:
 
-- 🔧 **Backend** (FastAPI)
-- 🎨 **Frontend** (Nginx)
+- **Backend** (FastAPI)
+- **Frontend** (HTML)
 
 Cada uno incluye:
 
-- 📦 Deployment
-- 🔌 Service
-- 📈 HorizontalPodAutoscaler (HPA)
+- Deployment
+- Service
+- HorizontalPodAutoscaler (HPA)
 
 ### 1. Estructura del proyecto
 
@@ -109,7 +113,7 @@ docker build -t <your-ecr>/frontend:1.0 ./apps/frontend
 docker push <your-ecr>/frontend:1.0
 ```
 
-> 📝 **Importante:** Luego actualiza las imágenes en los manifiestos de Kubernetes.
+> **Importante:** Luego actualiza las imágenes en los manifiestos de Kubernetes.
 
 ### 3. Crear namespace
 
@@ -137,7 +141,7 @@ kubectl apply -f hpa.yaml
 
 ---
 
-## 🌐 Ingress y Acceso a la Aplicación
+## Ingress y Acceso a la Aplicación
 
 ### Aplicar el Ingress
 
@@ -158,7 +162,7 @@ kubectl get ingress -n prex-demo
 
 ---
 
-## 📁 Estructura General del Proyecto
+## Estructura General del Proyecto
 
 ```
 prex-demo-examen/
@@ -181,19 +185,19 @@ prex-demo-examen/
 
 ---
 
-## ✅ Resultado Final
+## Resultado Final
 
 La solución contiene:
 
-- 🏗️ Infraestructura como código con Terraform
-- ☸️ Cluster EKS totalmente funcional en subnets privadas
-- 🚀 Backend y Frontend desplegados en Kubernetes
-- 📈 Autoscaling por HPA
-- 🌐 Ingress con AWS Load Balancer Controller
+- Infraestructura como código con Terraform
+- Cluster EKS totalmente funcional en subnets privadas
+- Backend y Frontend desplegados en Kubernetes
+- Autoscaling por HPA
+- Ingress con AWS Load Balancer Controller
 
 ---
 
-## 📝 Notas Adicionales
+## Notas Adicionales
 
 - Todos los comandos están listos para copiar y pegar directamente
 - Asegúrate de reemplazar los placeholders (`<account-id>`, `<cluster-name>`, etc.) con tus valores reales
