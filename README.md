@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/image-eb96af1d-aae5-497e-bbfb-50d12e16c2d7.png" alt="PREX Logo" width="600">
+  <img src="https://media.licdn.com/dms/image/v2/C4E16AQG_Cer9jZ5EqQ/profile-displaybackgroundimage-shrink_200_800/profile-displaybackgroundimage-shrink_200_800/0/1624549486857?e=2147483647&v=beta&t=LGl7g3mg2rteghcTrPmrRzm8Rc7l8bcSh43PV-fzm4I" alt="PREX Logo" width="600">
 </div>
 
 # PREX Demo – Examen Técnico
