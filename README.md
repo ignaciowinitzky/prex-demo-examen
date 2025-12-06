@@ -1,8 +1,8 @@
+# PREX Demo – Examen Técnico
+
 <div align="center">
   <img src="https://media.licdn.com/dms/image/v2/C4E16AQG_Cer9jZ5EqQ/profile-displaybackgroundimage-shrink_200_800/profile-displaybackgroundimage-shrink_200_800/0/1624549486857?e=2147483647&v=beta&t=LGl7g3mg2rteghcTrPmrRzm8Rc7l8bcSh43PV-fzm4I" alt="PREX Logo" width="600">
 </div>
-
-# PREX Demo – Examen Técnico
 
 Este repositorio contiene mi solución al examen de PREX. La solución incluye:
 
