@@ -42,15 +42,16 @@ Editar el archivo:
 iac/terraform.tfvars
 
 Y agregar:
-´´´
+
+```hcl
 aws_auth_users = [
-{
-userarn = "arn:aws:iam::<account-id>:user/<tu-usuario>"
-username = "admin"
-groups = ["system:masters"]
-}
+  {
+    userarn  = "arn:aws:iam::<account-id>:user/<tu-usuario>"
+    username = "admin"
+    groups   = ["system:masters"]
+  }
 ]
-´´´
+```
 
 ---
 
