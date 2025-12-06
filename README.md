@@ -42,7 +42,7 @@ Editar el archivo:
 iac/terraform.tfvars
 
 Y agregar:
-
+´´´
 aws_auth_users = [
 {
 userarn = "arn:aws:iam::<account-id>:user/<tu-usuario>"
@@ -50,6 +50,7 @@ username = "admin"
 groups = ["system:masters"]
 }
 ]
+´´´
 
 ---
 
