@@ -184,21 +184,3 @@ prex-demo-examen/
 ```
 
 ---
-
-## Resultado Final
-
-La solución contiene:
-
-- Infraestructura como código con Terraform
-- Cluster EKS totalmente funcional en subnets privadas
-- Backend y Frontend desplegados en Kubernetes
-- Autoscaling por HPA
-- Ingress con AWS Load Balancer Controller
-
----
-
-## Notas Adicionales
-
-- Todos los comandos están listos para copiar y pegar directamente
-- Asegúrate de reemplazar los placeholders (`<account-id>`, `<cluster-name>`, etc.) con tus valores reales
-- El despliegue completo puede tardar entre 15-30 minutos dependiendo de la región de AWS
