@@ -1,0 +1,19 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Python
+__pycache__/
+.venv/
+venv/
+
+# Node (por si hubiera algo)
+node_modules/
+dist/
+build/
+
+# IDEs / OS
+.vscode/
+.idea/
+.DS_Store
