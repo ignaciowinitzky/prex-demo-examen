@@ -5,8 +5,13 @@ metadata:
   namespace: banking-app
   annotations:
     kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/actions.redirect: '{"Type": "redirect", "RedirectConfig":{"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/certificate-arn: <Certificado ACM en AWS>
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
+    kubernetes.io/ingress.allow-http: 'true'    
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-Ext2-2021-06
 spec:
   rules:
     - http:

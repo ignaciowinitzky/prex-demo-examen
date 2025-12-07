@@ -20,7 +20,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: backend
-          image: your-registry/bank-backend:1.0.0
+          image: <IMAGEN EN ECR BUILDEADA BACKEND>
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

@@ -20,7 +20,7 @@ spec:
         runAsUser: 1010
       containers:
         - name: frontend
-          image: your-registry/bank-frontend:1.0.0
+          image: <IMAGEN EN ECR BUILDEADA FRONTEND>
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

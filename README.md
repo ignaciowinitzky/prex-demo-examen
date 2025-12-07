@@ -68,7 +68,7 @@ Una vez que la infraestructura esté lista, ejecuta:
 aws eks update-kubeconfig --name <cluster-name>
 ```
 
-> ✅ Listo, ya puedes ejecutar comandos `kubectl`.
+> Listo, ya puedes ejecutar comandos `kubectl`.
 
 ---
 
@@ -115,6 +115,11 @@ docker push <your-ecr>/frontend:1.0
 
 > **Importante:** Luego actualiza las imágenes en los manifiestos de Kubernetes.
 
+**Antes de desplegar, actualiza las imágenes en los archivos de deployment:**
+
+- En `kubernetes/backend/deployment.yaml`, reemplaza `<IMAGEN EN ECR BUILDEADA BACKEND>` por la imagen que acabas de construir y pushear a ECR (ej: `123456789012.dkr.ecr.us-east-1.amazonaws.com/backend:1.0`)
+- En `kubernetes/frontend/deployment.yaml`, reemplaza `<IMAGEN EN ECR BUILDEADA FRONTEND>` por la imagen que acabas de construir y pushear a ECR (ej: `123456789012.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0`)
+
 ### 3. Crear namespace
 
 ```bash
@@ -143,6 +148,25 @@ kubectl apply -f hpa.yaml
 
 ## Ingress y Acceso a la Aplicación
 
+### Crear certificado ACM en AWS
+
+Antes de aplicar el Ingress, necesitas crear un certificado SSL/TLS en AWS Certificate Manager (ACM):
+
+1. Ve a la consola de AWS Certificate Manager
+2. Solicita un certificado público para tu dominio
+3. Valida el certificado (por DNS o email)
+4. Copia el ARN del certificado (ej: `arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012`)
+
+**Importante:** El certificado debe estar en la misma región donde está tu cluster EKS.
+
+### Configurar el Ingress
+
+Edita el archivo `kubernetes/ingress.yaml` y reemplaza `<Certificado ACM en AWS>` por el ARN del certificado que acabas de crear:
+
+```yaml
+alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012
+```
+
 ### Aplicar el Ingress
 
 ```bash
@@ -157,8 +181,8 @@ kubectl get ingress -n prex-demo
 
 ### Endpoints disponibles
 
-- 🎨 **Frontend:** URL principal (raíz `/`)
-- 🔧 **Backend:** `/api/message`
+- **Frontend:** URL principal (raíz `/`)
+- **Backend:** `/api/message`
 
 ---
 
