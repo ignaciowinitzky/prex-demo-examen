@@ -2,9 +2,9 @@ import sys
 import subprocess
 
 def print_requisitos():
-    print("=======" * 80)
+    print("=" * 80)
     print("REQUISITOS PARA EJECUTAR ESTE SCRIPT")
-    print("=======" * 80)
+    print("=" * 80)
     print("1) Cuenta de AWS con permisos AdministratorAccess")
     print("2) AWS CLI configurado (aws configure)")
     print("3) Terraform instalado (>= 1.5)")

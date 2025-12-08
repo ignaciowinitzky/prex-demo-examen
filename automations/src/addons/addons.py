@@ -11,10 +11,6 @@ def addons(account_id, region, vpc_id):
     policy_file = Path(__file__).resolve().parent / "aws-load-balancer-controller.json"
 
     print("\nInstalación de AWS Load Balancer Controller")
-
-    # -------------------------------------------------------------------------
-    # 1) Verificar / crear IAM Policy desde tu JSON
-    # -------------------------------------------------------------------------
     if not policy_file.is_file():
         print(f"No se encontró el archivo de policy: {policy_file}")
         sys.exit(1)
@@ -31,7 +27,6 @@ def addons(account_id, region, vpc_id):
 
     policy_arn = out.strip() if out else ""
     if not policy_arn:
-        print(f"Policy '{policy_name}' no existe. Creándola desde {policy_file}...")
         out = run_cmd(
             [
                 "aws",
@@ -48,23 +43,17 @@ def addons(account_id, region, vpc_id):
         )
         data = json.loads(out)
         policy_arn = data["Policy"]["Arn"]
-        print(f"Policy creada: {policy_arn}")
     else:
         print(f"Policy ya existe: {policy_arn}")
 
-    # -------------------------------------------------------------------------
-    # 2) Verificar / actualizar IAM Role con trust policy IRSA
-    # -------------------------------------------------------------------------
     role_exists = True
     try:
         run_cmd(
             ["aws", "iam", "get-role", "--role-name", role_name],
             capture_output=True,
         )
-        print(f"Rol IAM encontrado: {role_name}")
     except SystemExit:
         role_exists = False
-        print(f"'{role_name}' no existe. Lo creamos")
 
     oidc_issuer = run_cmd(
         [
@@ -105,7 +94,6 @@ def addons(account_id, region, vpc_id):
         ],
     }
 
-    # Guardamos trust policy en un archivo temporal
     with tempfile.NamedTemporaryFile("w", delete=False) as f:
         json.dump(trust_policy, f)
         trust_path = f.name
@@ -122,7 +110,6 @@ def addons(account_id, region, vpc_id):
                 f"file://{trust_path}",
             ]
         )
-        print(f"Rol IAM creado: {role_name}")
     else:
         run_cmd(
             [
@@ -135,7 +122,6 @@ def addons(account_id, region, vpc_id):
                 f"file://{trust_path}",
             ]
         )
-        print(f"Trust policy del rol '{role_name}' actualizada.")
 
     try:
         run_cmd(

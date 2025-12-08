@@ -29,6 +29,5 @@ def create_acm_certificate(domain, region):
         print(e)
         sys.exit(1)
 
-    print(f"Certificado solicitado. ARN: {cert_arn}")
     return cert_arn
 
