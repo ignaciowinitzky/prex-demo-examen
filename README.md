@@ -16,10 +16,11 @@ Este repositorio contiene mi solución al examen de PREX. La solución incluye:
 
 Antes de comenzar, asegúrate de tener:
 
-1. Una cuenta de AWS con permisos `AdministratorAccess`
+1. Una cuenta y credenciales de AWS con permisos `AdministratorAccess`
 2. Un IDE como Visual Studio Code, Cursor u otro similar
 3. Terraform instalado (versión recomendada >= 1.5)
 4. AWS CLI configurado con un usuario válido
+5. Kubernetes y Helm instalado
 
 ---
 
@@ -203,8 +204,10 @@ prex-demo-examen/
 │   ├── namespace.yaml
 │   └── ingress.yaml
 └── apps/
-    ├── backend/
-    └── frontend/
+│   ├── backend/
+│    └── frontend/
+└── automation/
+│    ├── index.py
 ```
 
 ---

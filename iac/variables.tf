@@ -99,13 +99,3 @@ variable "instance_types" {
   type        = list(string)
   default     = ["t3.medium"]
 }
-
-variable "aws_auth_users" {
-  description = "Lista de usuarios IAM para acceder al cluster"
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-  default = []
-}

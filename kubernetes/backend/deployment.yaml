@@ -20,10 +20,10 @@ spec:
         runAsUser: 1000
       containers:
         - name: backend
-          image: <IMAGEN EN ECR BUILDEADA BACKEND>
+          image: 058264225985.dkr.ecr.us-east-1.amazonaws.com/backend:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8000
+            - containerPort: 3000
           resources:
             requests:
               cpu: "100m"
@@ -34,12 +34,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /api/health
-              port: 8000
+              port: 3000
             initialDelaySeconds: 20
             periodSeconds: 60
           readinessProbe:
             httpGet:
               path: /api/health
-              port: 8000
+              port: 3000
             initialDelaySeconds: 20
             periodSeconds: 60

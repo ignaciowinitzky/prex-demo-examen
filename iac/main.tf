@@ -6,37 +6,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.32"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.13"
-    }
   }
 }
 
 provider "aws" {
   region = var.region
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_name
-}
-
-provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = module.eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
-  }
 }
 
 locals {
@@ -46,6 +20,13 @@ locals {
     product     = var.product
     region      = var.region
   }
+}
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
+}
+
+locals {
+  my_public_ip = "${chomp(data.http.my_ip.response_body)}/32"
 }
 
 module "vpc" {
@@ -64,9 +45,8 @@ module "vpc" {
 }
 
 module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
-
+  source                          = "terraform-aws-modules/eks/aws"
+  version                         = "~> 20.0"
   cluster_name                    = var.project_name
   cluster_version                 = var.cluster_version
   cluster_endpoint_public_access  = var.cluster_endpoint_public_access
@@ -108,33 +88,12 @@ module "eks" {
   }
 }
 
-module "eks_aws_auth" {
-  source                    = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version                   = "~> 20.0"
-  manage_aws_auth_configmap = true
-  aws_auth_users            = var.aws_auth_users
-  depends_on                = [module.eks]
-}
-
-resource "aws_iam_policy" "aws_lb_controller" {
-  name        = "${var.project_name}-aws-lb-controller"
-  description = "IAM policy for AWS Load Balancer Controller"
-  policy      = file("${path.module}/policies/aws-load-balancer-controller.json")
-  tags        = local.default_tags
-}
-
-module "aws_lb_controller_irsa" {
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version   = ">= 5.30, < 6.0"
-  role_name = "${var.project_name}-aws-lb-controller"
-  tags      = local.default_tags
-  role_policy_arns = {
-    aws_lb_controller = aws_iam_policy.aws_lb_controller.arn
-  }
-  oidc_providers = {
-    main = {
-      provider_arn               = module.eks.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
-    }
-  }
+resource "aws_security_group_rule" "allow_all_from_my_ip_to_eks" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = [local.my_public_ip]
+  security_group_id = module.eks.cluster_security_group_id
+  description       = "Allow ALL traffic from my public IP only"
 }
